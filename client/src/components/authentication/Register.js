@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios'
+import axios from '../../config/axios'
 import { Link } from 'react-router-dom'
 import Header from '../layout/Header'
 import { Button, TextField, InputAdornment } from '@material-ui/core'

@@ -8,7 +8,11 @@ const {noteRouter} = require('./app/controller/NotesController')
 
 const {usersRouter} = require('./app/controller/UsersController')
 
-const port = process.env.PORT || 8000
+const cors = require('cors')
+
+app.use(cors())
+
+const port = process.env.PORT || 3001
 app.use(express.json())
 // app.use('/',function(req,res){
 //     res.send('welcome')

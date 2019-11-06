@@ -42,19 +42,20 @@ handleSubmit(e){
             console.log(response.data)
             axios.defaults.headers["x-auth"] = response.data.token
             localStorage.setItem('token', response.data.token)
-             this.props.handleIsAuthenticated(true)
+            this.props.handleIsAuthenticated(true)
             this.setState(() => ({
                 redirect: true,
             }))
         })
         .catch(err => {
-            window.alert('Invalid email / password')
+            // window.alert('Invalid email / password')
+            window.alert(err)
             console.log(err)
-             this.setState(() => ({
-                 password: '',
-                notice: err,
-                loader: false
-             }))
+            this.setState(() => ({
+                password: '',
+            notice: err,
+            loader: false
+            }))
         })
       }else{
         this.setState({
