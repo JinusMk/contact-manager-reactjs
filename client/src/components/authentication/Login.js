@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from '../../config/axios'
 import { Link, Redirect} from 'react-router-dom'
-import { Grid, Container, Button, TextField, InputAdornment } from '@material-ui/core'
+import { Button, TextField, InputAdornment } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import Header from '../layout/Header'
 const divStyle = {
@@ -25,20 +25,20 @@ class UserLogin extends React.Component{
     }
 handleSubmit(e){
     e.preventDefault()
-    const { errorCode, email, password } = this.state;
+    this.setState({loader: true})
+    const { email, password } = this.state;
       const validateNewInput = {
         email: email.trim() ? '' : 'Please enter Email Address',
         password: password.trim() ? '' : 'Please enter Password'
       };
       if(Object.keys(validateNewInput).every((k) => { return validateNewInput[k] === '' })){
-        this.setState({loader: true})
-         const formData = {
+        const formData = {
         email: this.state.email,
         password: this.state.password
         }
         axios.post('/users/login',formData)
         .then((response) => {
-            // this.setState({loader: false})
+            this.setState({loader: false})
             console.log(response.data)
             axios.defaults.headers["x-auth"] = response.data.token
             localStorage.setItem('token', response.data.token)
@@ -52,21 +52,24 @@ handleSubmit(e){
             console.log(err)
              this.setState(() => ({
                  password: '',
-                notice: err
+                notice: err,
+                loader: false
              }))
         })
       }else{
         this.setState({
-            error: validateNewInput
+            error: validateNewInput,
+            loader: false
           });
       }
 }
 handleChange(key, value){
-    // e.persist()
-    this.setState(()=>({
-        [key]: value,
+    this.setState(prevState => ({
+        ...prevState,
+        [key] : value,
         error: {
-            [key] : ''
+            ...prevState.error,
+            [key]: ''
         }
     }))
 }
@@ -75,7 +78,6 @@ togglePasswordMask = () => {
         showPassword: !prevState.showPassword
     }))
 }
-
 render(){
     if(this.state.redirect){
         return <Redirect to="/contacts"/>
@@ -91,10 +93,9 @@ render(){
                             </div>
                             <div className="form-group-field">
                                 <TextField
-                                    id="username"
+                                    id="email"
                                     error={error.email ? true : false}
                                     label="Email Address"
-                                    className="username"
                                     type="email"
                                     fullWidth={true}
                                     // autoComplete="email"
@@ -108,7 +109,6 @@ render(){
                             <div className="form-group-field">
                                 <TextField
                                     id="password"
-                                    className="password"
                                     error={error.password ? true : false}
                                     label="Password"
                                     type={this.state.showPassword ? 'text' : 'password'}
@@ -132,8 +132,8 @@ render(){
                                 <h6 className="error-msg">{this.state.error.password}</h6>
                             </div>
                         <Button type="submit" variant="contained" color="primary" disabled={this.state.loader} className="submit" onClick={this.loginUser} >{this.state.loader ? "Processing..." : "Login"}</Button>
+                        <p className="account-link-option">Don't have an account? <Link to="register">REGISTER NOW</Link></p>
                         </form>
-                        <span className="forgot-password" style={{display: 'none'}}><Link className="primary-link" to="/forgot-password">Forgot Password ?</Link></span>
         </div>
         </React.Fragment>
     )

@@ -40,7 +40,7 @@ export default class Headder extends Component{
     if(logoutFlag){
       return <Redirect to="/login"/>
     }
-    const userName = localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).username : 'User'
+    const userName = localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).username : ''
     return(
         <React.Fragment>
             <header>
@@ -65,7 +65,6 @@ export default class Headder extends Component{
                             onClose={this.handleClose}
                             TransitionComponent={Fade}
                             className="header-drop-down"
-                        // classes={{root : styles.root}}
                         >
                             <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                        </Menu>

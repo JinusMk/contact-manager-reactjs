@@ -43,6 +43,15 @@ body{
             .form-group-field{
                 margin-bottom: 10px;
             }
+            .account-link-option{
+                margin: 20px 0;
+                font-size: 12px;
+                font-family: 'Roboto';
+                a{
+                  text-decoration: none;
+                  font-family: 'Roboto Condensed';
+                }
+            }
         }
     }
     header{
@@ -97,8 +106,8 @@ body{
                     font-family: 'Roboto' ;
                     font-weight: 600;
                  }
+                }
                }
-               }
-           }
+            }
       }
 }
