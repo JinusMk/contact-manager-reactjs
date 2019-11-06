@@ -16,7 +16,7 @@ import UserLogin from './components/authentication/Login'
 import axios from './config/axios'
 import UserLogout from './components/authentication/Logout'
 import HomePage from './components/Home/HomePage.'
-
+import './styles/_app.scss'
 class App extends Component {
   constructor(props){
     super(props)
@@ -35,13 +35,9 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div>
-
-       {/* <h2> Contact Manager </h2> */}
-      <Home handleIsAuthenticated = {this.state.isAuthenticated}></Home>
-
       <Switch>
       
-      {/* <Route path="/" component= {Home} exact = {true}/>  */}
+      <Route path="/" component= {UserLogin} handleIsAuthenticated={this.handleIsAuthenticated} exact = {true}/> 
 
         <Route path = "/" component = {HomePage} exact = {true}/>
        <Route path="/contacts" component = {ContactList} exact = {true}/>
